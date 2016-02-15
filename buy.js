@@ -5,6 +5,7 @@ var webdriver = require('selenium-webdriver'),
     driver = require('./lib/init.js').driver,
     CONFIG = require('./lib/footlocker/config'),
     ftdriver = require('./lib/footlocker/ftdriver'),
+    addtocart = require('./lib/footlocker/addtocart'),
     login = require('./lib/footlocker/login');
 
 var submitOrder = function() {
@@ -56,27 +57,13 @@ var startCheckout = function() {
     });
 }
 
-var buyshoes = function() {
+var main = function() {
   login();
-  ftdriver.get(CONFIG.productUrl);
-  driver.wait(until.elementLocated(By.id('product_sizes')));
-  driver.findElement(By.id('product_sizes')).sendKeys(CONFIG.size);
-  driver.executeScript("window.scrollTo(0, document.body.scrollHeight)");
-  var addToCartEle = driver.findElement(By.css('.add_to_cart input'));
-  driver.wait(until.elementIsEnabled(addToCartEle));
-  addToCartEle.click();
-
+  addtocart();
   startCheckout();
 }
 
-buyshoes();
+main();
 
 setTimeout(function() {}, 100000);
-
-/*
-
-console.log(orderSubmit.getText());
-console.log("didn't submit");
-driver.quit();
-*/
 
