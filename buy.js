@@ -1,13 +1,14 @@
 var webdriver = require('selenium-webdriver'),
     By = require('selenium-webdriver').By,
     until = require('selenium-webdriver').until,
-    CONFIG = require('./config'),
     util = require('util'),
     driver = require('./lib/init.js').driver,
+    CONFIG = require('./lib/footlocker/config'),
     login = require('./lib/footlocker/login');
 
-
-console.log('-- starting buing product with config: ' + util.inspect(CONFIG));
+var submitOrder = function(csc) {
+  ccv.sendKeys(CONFIG.csc);
+}
 
 var payment = function() {
   console.log('---- start payment ---');
@@ -16,11 +17,16 @@ var payment = function() {
 
 
   driver.wait(until.elementIsNotVisible(overLayEl));
-  var ccv = driver.findElement(By.id('payMethodPaneStoredCCCVV'));
-  ccv.click();
-  driver.wait(until.elementIsSelected(ccv));
-  console.log('found ccv element');
-  ccv.sendKeys(CCV);
+  var csc = driver.findElement(By.id('payMethodPaneStoredCCCVV'));
+  csc.click();
+  driver.wait(until.elementIsSelected(ccv))
+    .then(function() {
+      console.log('found csc element');
+      submitOrder(csc);
+    })
+    .catch(function() {
+      console.log('faild to submit order');
+    });
 }
 
 var startCheckout = function() {
@@ -42,6 +48,7 @@ var startCheckout = function() {
 }
 
 var buyshoes = function() {
+  login();
   driver.get(CONFIG.productUrl);
   driver.wait(until.elementLocated(By.id('product_sizes')));
   driver.findElement(By.id('product_sizes')).sendKeys(CONFIG.size);
