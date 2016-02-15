@@ -18,7 +18,10 @@ var submitOrder = function() {
       orderSubmit
         .then(function() {
           orderSubmit.click();
-          console.log('Order submitted!!!!!!');
+          driver.wait(until.elementLocated(By.id('orderReceipt')))
+            .then(function() {
+              console.log('Order submitted!!!!!!');
+            });
         })
         .catch(function() {
           console.log('Failed to submit order.');
