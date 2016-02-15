@@ -1,0 +1,23 @@
+{
+  "name": "buyshoes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "buy.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/niczy/buyshoes.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/niczy/buyshoes/issues"
+  },
+  "homepage": "https://github.com/niczy/buyshoes#readme",
+  "dependencies": {
+    "selenium-webdriver": "^2.52.0",
+    "webdriverio": "^4.0.3"
+  }
+}

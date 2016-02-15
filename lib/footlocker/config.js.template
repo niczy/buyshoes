@@ -1,0 +1,9 @@
+// fill the EAMIL, PASSWOD, SIZE, CCV, PRODUCT_URL with correct information.
+// rename it to config.js
+module.exports = {
+  'email': EMAIL,
+  'password': PASSWORD,
+  'size': SIZE,
+  'ccv': CCV,
+  'productUrl': PRODUCT_URL
+}
