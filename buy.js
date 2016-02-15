@@ -4,6 +4,7 @@ var webdriver = require('selenium-webdriver'),
     util = require('util'),
     driver = require('./lib/init.js').driver,
     CONFIG = require('./lib/footlocker/config'),
+    ftdriver = require('./lib/footlocker/ftdriver'),
     login = require('./lib/footlocker/login');
 
 var submitOrder = function() {
@@ -38,7 +39,7 @@ var payment = function() {
 }
 
 var startCheckout = function() {
-  driver.get('http://www.footlocker.com/shoppingcart/default.cfm?sku=');
+  ftdriver.get('http://www.footlocker.com/shoppingcart/default.cfm?sku=');
   var checkoutButton = driver.findElement(By.id('cart_checkout_button'));
   var goToCheckout = checkoutButton.click();
   goToCheckout
@@ -57,7 +58,7 @@ var startCheckout = function() {
 
 var buyshoes = function() {
   login();
-  driver.get(CONFIG.productUrl);
+  ftdriver.get(CONFIG.productUrl);
   driver.wait(until.elementLocated(By.id('product_sizes')));
   driver.findElement(By.id('product_sizes')).sendKeys(CONFIG.size);
   driver.executeScript("window.scrollTo(0, document.body.scrollHeight)");
