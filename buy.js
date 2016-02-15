@@ -6,27 +6,35 @@ var webdriver = require('selenium-webdriver'),
     CONFIG = require('./lib/footlocker/config'),
     login = require('./lib/footlocker/login');
 
-var submitOrder = function(csc) {
-  ccv.sendKeys(CONFIG.csc);
+var submitOrder = function() {
+  console.log('--- submitting order ----');
+  var csc = driver.findElement(By.id('payMethodPaneStoredCCCVV'));
+  csc.click()
+    .then(function() {
+      csc.sendKeys(CONFIG.csc);
+      var orderSubmit = driver.findElement(By.id('orderSubmit'));
+      orderSubmit
+        .then(function() {
+          orderSubmit.click();
+          console.log('Order submitted!!!!!!');
+        })
+        .catch(function() {
+          console.log('Failed to submit order.');
+        });
+    })
+    .catch(function(){
+      console.log('Failed to select csv element.');
+      driver.sleep(1000)
+        .then(function() {
+          console.log('Try again.');
+          submitOrder();
+        });
+    });
 }
 
 var payment = function() {
   console.log('---- start payment ---');
-  driver.wait(until.elementLocated(By.id('sharedCart_panel_overlayBG')));
-  var overLayEl = driver.findElement(By.id('sharedCart_panel_overlayBG'));
-
-
-  driver.wait(until.elementIsNotVisible(overLayEl));
-  var csc = driver.findElement(By.id('payMethodPaneStoredCCCVV'));
-  csc.click();
-  driver.wait(until.elementIsSelected(ccv))
-    .then(function() {
-      console.log('found csc element');
-      submitOrder(csc);
-    })
-    .catch(function() {
-      console.log('faild to submit order');
-    });
+  submitOrder();
 }
 
 var startCheckout = function() {
@@ -66,7 +74,6 @@ setTimeout(function() {}, 100000);
 
 /*
 
-var orderSubmit = driver.findElement(By.id('orderSubmit'));
 console.log(orderSubmit.getText());
 console.log("didn't submit");
 driver.quit();
