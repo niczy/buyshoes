@@ -3,12 +3,13 @@ var addtocart = require('./lib/footlocker/addtocart'),
     login = require('./lib/footlocker/login');
 
 var main = function() {
-  login();
-  addtocart();
-  checkout();
+  login()
+    .then(function() {
+      addtocart()
+        .then(function() {
+          checkout();
+        });
+  });
 }
 
 main();
-
-setTimeout(function() {}, 100000);
-
