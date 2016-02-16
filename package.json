@@ -17,7 +17,6 @@
   },
   "homepage": "https://github.com/niczy/buyshoes#readme",
   "dependencies": {
-    "selenium-webdriver": "^2.52.0",
-    "webdriverio": "^4.0.3"
+    "selenium-webdriver": "^2.52.0"
   }
 }
